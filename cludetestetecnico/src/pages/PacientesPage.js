@@ -13,6 +13,8 @@ const PacientesPage = () => {
   const [editingPatientId, setEditingPatientId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [pacienteToDelete, setPacienteToDelete] = useState(null);
 
   useEffect(() => {
     loadPacientes();
@@ -43,20 +45,32 @@ const PacientesPage = () => {
   };
 
   const handleDelete = async (id) => {
+    const paciente = pacientes.find(p => p.id === id);
+    setPacienteToDelete(paciente);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
     try {
-      const success = await deletePaciente(id);
+      const success = await deletePaciente(pacienteToDelete.id);
       if (success) {
         setSuccessMessage('Paciente excluído com sucesso!');
-        // Remove a mensagem após 3 segundos
         setTimeout(() => {
           setSuccessMessage('');
         }, 3000);
-        // Recarrega a lista
         loadPacientes();
       }
     } catch (err) {
       setError('Erro ao excluir paciente');
+    } finally {
+      setIsDeleteModalOpen(false);
+      setPacienteToDelete(null);
     }
+  };
+
+  const cancelDelete = () => {
+    setIsDeleteModalOpen(false);
+    setPacienteToDelete(null);
   };
 
   const handleAddSuccess = () => {
@@ -176,6 +190,34 @@ const PacientesPage = () => {
           onSuccess={handleAddSuccess}
           editingPatientId={editingPatientId}
         />
+
+        {/* Modal de Confirmação de Exclusão */}
+        {isDeleteModalOpen && (
+          <div className="modal-overlay">
+            <div className="modal-content" style={{ maxWidth: 400 }}>
+              <h3>Confirmar Exclusão</h3>
+              <p>
+                Todas as consultas relacionadas à esse paciente serão removidos permanentemente, deseja continuar?
+              </p>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '20px' }}>
+                <button 
+                  className="add-button" 
+                  onClick={cancelDelete}
+                  style={{ backgroundColor: '#6c757d' }}
+                >
+                  Cancelar
+                </button>
+                <button 
+                  className="add-button" 
+                  onClick={confirmDelete}
+                  style={{ backgroundColor: '#dc3545' }}
+                >
+                  Confirmar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </Layout>
   );

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import AddProfessionalModal from '../components/AddProfessionalModal';
 import { getProfissionais, deleteProfissional } from '../services/profissionalService';
+import AgendaProfissionalModal from '../components/AgendaProfissionalModal';
 import './ProfissionaisPage.css';
 
 const ProfissionaisPage = () => {
@@ -13,6 +14,10 @@ const ProfissionaisPage = () => {
   const [editingProfessionalId, setEditingProfessionalId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+  const [isAgendaModalOpen, setIsAgendaModalOpen] = useState(false);
+  const [agendaProfissionalId, setAgendaProfissionalId] = useState(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [profissionalToDelete, setProfissionalToDelete] = useState(null);
 
   useEffect(() => {
     loadProfissionais();
@@ -38,20 +43,32 @@ const ProfissionaisPage = () => {
   };
 
   const handleDelete = async (id) => {
+    const profissional = profissionais.find(p => p.id === id);
+    setProfissionalToDelete(profissional);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
     try {
-      const success = await deleteProfissional(id);
+      const success = await deleteProfissional(profissionalToDelete.id);
       if (success) {
         setSuccessMessage('Profissional excluído com sucesso!');
-        // Remove a mensagem após 3 segundos
         setTimeout(() => {
           setSuccessMessage('');
         }, 3000);
-        // Recarrega a lista
         loadProfissionais();
       }
     } catch (err) {
       setError('Erro ao excluir profissional');
+    } finally {
+      setIsDeleteModalOpen(false);
+      setProfissionalToDelete(null);
     }
+  };
+
+  const cancelDelete = () => {
+    setIsDeleteModalOpen(false);
+    setProfissionalToDelete(null);
   };
 
   const handleAddSuccess = () => {
@@ -66,6 +83,16 @@ const ProfissionaisPage = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setEditingProfessionalId(null);
+  };
+
+  const handleOpenAgendaModal = (id) => {
+    setAgendaProfissionalId(id);
+    setIsAgendaModalOpen(true);
+  };
+
+  const handleCloseAgendaModal = () => {
+    setIsAgendaModalOpen(false);
+    setAgendaProfissionalId(null);
   };
 
   // Cálculos para paginação
@@ -130,6 +157,14 @@ const ProfissionaisPage = () => {
                           ✏️
                         </button>
                         <button
+                          className="action-button"
+                          onClick={() => handleOpenAgendaModal(profissional.id)}
+                          title="Ver agendamentos"
+                          style={{ color: '#673ab7' }}
+                        >
+                          📋
+                        </button>
+                        <button
                           className="action-button delete"
                           onClick={() => handleDelete(profissional.id)}
                           title="Excluir"
@@ -171,6 +206,40 @@ const ProfissionaisPage = () => {
           onSuccess={handleAddSuccess}
           editingProfessionalId={editingProfessionalId}
         />
+
+        <AgendaProfissionalModal
+          isOpen={isAgendaModalOpen}
+          onClose={handleCloseAgendaModal}
+          profissionalId={agendaProfissionalId}
+        />
+
+        {/* Modal de Confirmação de Exclusão */}
+        {isDeleteModalOpen && (
+          <div className="modal-overlay">
+            <div className="modal-content" style={{ maxWidth: 400 }}>
+              <h3>Confirmar Exclusão</h3>
+              <p>
+                Todas as consultas relacionadas à esse profissional serão removidos permanentemente, deseja continuar?
+              </p>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '20px' }}>
+                <button 
+                  className="add-button" 
+                  onClick={cancelDelete}
+                  style={{ backgroundColor: '#6c757d' }}
+                >
+                  Cancelar
+                </button>
+                <button 
+                  className="add-button" 
+                  onClick={confirmDelete}
+                  style={{ backgroundColor: '#dc3545' }}
+                >
+                  Confirmar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </Layout>
   );

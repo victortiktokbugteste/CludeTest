@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import IndexPage from './pages/IndexPage';
 import PacientesPage from './pages/PacientesPage';
 import ProfissionaisPage from './pages/ProfissionaisPage';
+import AgendamentosPage from './pages/AgendamentosPage';
 import Layout from './components/Layout';
 
 const PrivateRoute = ({ children }) => {
@@ -44,12 +45,7 @@ function App() {
           path="/agendamentos"
           element={
             <PrivateRoute>
-              <Layout>
-                <div className="main-content">
-                  <h2>Agendamento de Consultas</h2>
-                  {/* Conteúdo da página de agendamentos será adicionado aqui */}
-                </div>
-              </Layout>
+              <AgendamentosPage />
             </PrivateRoute>
           }
         />
