@@ -1,0 +1,149 @@
+.profissionais-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.profissionais-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profissionais-header h2 {
+  color: #333;
+  font-size: 24px;
+  margin: 0;
+}
+
+.add-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.add-button:hover {
+  background-color: #218838;
+}
+
+.profissionais-table-container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.profissionais-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.profissionais-table th,
+.profissionais-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.profissionais-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #333;
+}
+
+.profissionais-table tr:hover {
+  background-color: #f8f9fa;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.action-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px;
+  transition: transform 0.2s;
+}
+
+.action-button:hover {
+  transform: scale(1.1);
+}
+
+.action-button.edit {
+  color: #007bff;
+}
+
+.action-button.delete {
+  color: #dc3545;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.no-data-message {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profissionais-container {
+    padding: 1rem;
+  }
+
+  .profissionais-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .profissionais-table th,
+  .profissionais-table td {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profissionais-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .profissionais-table th,
+  .profissionais-table td {
+    padding: 0.5rem;
+  }
+
+  .action-button {
+    padding: 0.3rem;
+    font-size: 1rem;
+  }
+} 
