@@ -11,6 +11,8 @@ const PacientesPage = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingPatientId, setEditingPatientId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   useEffect(() => {
     loadPacientes();
@@ -71,6 +73,16 @@ const PacientesPage = () => {
     setEditingPatientId(null);
   };
 
+  // Cálculos para paginação
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = pacientes.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(pacientes.length / itemsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   if (loading) {
     return (
       <Layout>
@@ -98,41 +110,63 @@ const PacientesPage = () => {
           {pacientes.length === 0 ? (
             <div className="no-data-message">Nenhum paciente cadastrado</div>
           ) : (
-            <table className="pacientes-table">
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>CPF</th>
-                  <th>Data de Nascimento</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                {pacientes.map((paciente) => (
-                  <tr key={paciente.id}>
-                    <td>{paciente.name}</td>
-                    <td>{paciente.cpf}</td>
-                    <td>{formatDate(paciente.birthDate)}</td>
-                    <td className="actions">
-                      <button
-                        className="action-button edit"
-                        onClick={() => handleEdit(paciente.id)}
-                        title="Editar"
-                      >
-                        ✏️
-                      </button>
-                      <button
-                        className="action-button delete"
-                        onClick={() => handleDelete(paciente.id)}
-                        title="Excluir"
-                      >
-                        🗑️
-                      </button>
-                    </td>
+            <>
+              <table className="pacientes-table">
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>Data de Nascimento</th>
+                    <th>Ações</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {currentItems.map((paciente) => (
+                    <tr key={paciente.id}>
+                      <td>{paciente.name}</td>
+                      <td>{paciente.cpf}</td>
+                      <td>{formatDate(paciente.birthDate)}</td>
+                      <td className="actions">
+                        <button
+                          className="action-button edit"
+                          onClick={() => handleEdit(paciente.id)}
+                          title="Editar"
+                        >
+                          ✏️
+                        </button>
+                        <button
+                          className="action-button delete"
+                          onClick={() => handleDelete(paciente.id)}
+                          title="Excluir"
+                        >
+                          🗑️
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+              <div className="pagination">
+                <button
+                  className="pagination-button"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  Anterior
+                </button>
+                <span className="pagination-info">
+                  Página {currentPage} de {totalPages}
+                </span>
+                <button
+                  className="pagination-button"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                >
+                  Próxima
+                </button>
+              </div>
+            </>
           )}
         </div>
 

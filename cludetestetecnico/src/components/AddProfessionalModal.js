@@ -69,14 +69,22 @@ const AddProfessionalModal = ({ isOpen, onClose, onSuccess, editingProfessionalI
       });
 
       if (!response.ok) {
-        throw new Error('Erro ao salvar profissional');
+        const errorData = await response.json();
+        if (errorData.errors && Array.isArray(errorData.errors)) {
+          // Formata as mensagens de erro
+          const errorMessages = errorData.errors.map(err => err.message).join('\n');
+          setError(errorMessages);
+        } else {
+          throw new Error('Erro ao salvar profissional');
+        }
+        return;
       }
 
       const data = await response.json();
       onSuccess(data);
       handleClose();
     } catch (err) {
-      setError('Erro ao salvar profissional. Tente novamente.');
+      setError(err.message || 'Erro ao salvar profissional. Tente novamente.');
     } finally {
       setLoading(false);
     }

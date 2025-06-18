@@ -69,14 +69,22 @@ const AddPatientModal = ({ isOpen, onClose, onSuccess, editingPatientId }) => {
       });
 
       if (!response.ok) {
-        throw new Error('Erro ao salvar paciente');
+        const errorData = await response.json();
+        if (errorData.errors && Array.isArray(errorData.errors)) {
+          // Formata as mensagens de erro
+          const errorMessages = errorData.errors.map(err => err.message).join('\n');
+          setError(errorMessages);
+        } else {
+          throw new Error('Erro ao salvar paciente');
+        }
+        return;
       }
 
       const data = await response.json();
       onSuccess(data);
       handleClose();
     } catch (err) {
-      setError('Erro ao salvar paciente. Tente novamente.');
+      setError(err.message || 'Erro ao salvar paciente. Tente novamente.');
     } finally {
       setLoading(false);
     }

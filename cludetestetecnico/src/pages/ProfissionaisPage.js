@@ -11,6 +11,8 @@ const ProfissionaisPage = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProfessionalId, setEditingProfessionalId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   useEffect(() => {
     loadProfissionais();
@@ -66,6 +68,16 @@ const ProfissionaisPage = () => {
     setEditingProfessionalId(null);
   };
 
+  // Cálculos para paginação
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = profissionais.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(profissionais.length / itemsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   if (loading) {
     return (
       <Layout>
@@ -93,41 +105,63 @@ const ProfissionaisPage = () => {
           {profissionais.length === 0 ? (
             <div className="no-data-message">Nenhum profissional cadastrado</div>
           ) : (
-            <table className="profissionais-table">
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>CPF</th>
-                  <th>CRM</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                {profissionais.map((profissional) => (
-                  <tr key={profissional.id}>
-                    <td>{profissional.name}</td>
-                    <td>{profissional.cpf}</td>
-                    <td>{profissional.crm}</td>
-                    <td className="actions">
-                      <button
-                        className="action-button edit"
-                        onClick={() => handleEdit(profissional.id)}
-                        title="Editar"
-                      >
-                        ✏️
-                      </button>
-                      <button
-                        className="action-button delete"
-                        onClick={() => handleDelete(profissional.id)}
-                        title="Excluir"
-                      >
-                        🗑️
-                      </button>
-                    </td>
+            <>
+              <table className="profissionais-table">
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>CRM</th>
+                    <th>Ações</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {currentItems.map((profissional) => (
+                    <tr key={profissional.id}>
+                      <td>{profissional.name}</td>
+                      <td>{profissional.cpf}</td>
+                      <td>{profissional.crm}</td>
+                      <td className="actions">
+                        <button
+                          className="action-button edit"
+                          onClick={() => handleEdit(profissional.id)}
+                          title="Editar"
+                        >
+                          ✏️
+                        </button>
+                        <button
+                          className="action-button delete"
+                          onClick={() => handleDelete(profissional.id)}
+                          title="Excluir"
+                        >
+                          🗑️
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+              <div className="pagination">
+                <button
+                  className="pagination-button"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  Anterior
+                </button>
+                <span className="pagination-info">
+                  Página {currentPage} de {totalPages}
+                </span>
+                <button
+                  className="pagination-button"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                >
+                  Próxima
+                </button>
+              </div>
+            </>
           )}
         </div>
 
