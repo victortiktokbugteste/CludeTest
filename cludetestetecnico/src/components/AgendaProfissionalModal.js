@@ -28,11 +28,38 @@ const AgendaProfissionalModal = ({ isOpen, onClose, profissionalId }) => {
           'Authorization': `Bearer ${token}`
         }
       });
+      
       if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.message || 'Erro ao buscar agenda');
+        // Verifica se há conteúdo na resposta antes de tentar fazer parse
+        const text = await response.text();
+        let errorMessage = 'Erro ao buscar agenda';
+        
+        if (text) {
+          try {
+            const data = JSON.parse(text);
+            errorMessage = data.message || errorMessage;
+          } catch (parseError) {
+            // Se não conseguir fazer parse do JSON, usa o texto da resposta
+            errorMessage = text || errorMessage;
+          }
+        }
+        
+        throw new Error(errorMessage);
       }
-      const data = await response.json();
+      
+      // Verifica se há conteúdo na resposta antes de tentar fazer parse
+      const text = await response.text();
+      let data = [];
+      
+      if (text) {
+        try {
+          data = JSON.parse(text);
+        } catch (parseError) {
+          // Se não conseguir fazer parse do JSON, assume array vazio
+          data = [];
+        }
+      }
+      
       setAgendamentos(Array.isArray(data) ? data : []);
     } catch (err) {
       setError(err.message);
