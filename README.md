@@ -2,9 +2,13 @@
 
 https://cludetestfront.azurewebsites.net/
 
-Essa é a parte frontend do projeto. Foi feito em react, fui pesquisando e criando de acordo o que foi pedido no escopo do teste.
-Não sou fera em react e confesso que utilizei os conhecimentos do poderoso chat gpt para me auxiliar, escolhi react porque era um dos requisitos da vaga no programathor se não estou enganado.
-Mas claro que eu encaro o react se assim for necessário!
+Essa é toda a parte visual da nossa aplicação.
+Ela possui:
+
+1 TELA PRA FAZER O LOGIN (essa chama o endpoint /login que retorna o Bearer Token)
+1 TELA PRA CRIAR, EXCLUIR, ALTERAR PACIENTES
+1 TELA PRA CRIAR, EXCLUIR, ALTERAR PROFISSIONAIS DE SAÚDE (Nessa tela tem um Plus que é poder ver os agendamentos do profissional, fica no segundo icone antes do excluir)
+1 TELA PRA CRIAR, EXCLUIR, ALTERAR OS AGENDAMENTOS
 
 ## ⚙️ Como rodar localmente
 
