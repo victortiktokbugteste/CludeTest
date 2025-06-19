@@ -1,5 +1,7 @@
 # CLUDE TESTE TÉCNICO - FRONTEND
 
+https://cludetestfront.azurewebsites.net/
+
 Essa é a parte frontend do projeto. Foi feito em react, fui pesquisando e criando de acordo o que foi pedido no escopo do teste.
 Não sou fera em react e confesso que utilizei os conhecimentos do poderoso chat gpt para me auxiliar, escolhi react porque era um dos requisitos da vaga no programathor se não estou enganado.
 Mas claro que eu encaro o react se assim for necessário!
@@ -12,7 +14,7 @@ Mas claro que eu encaro o react se assim for necessário!
 4. Execute o comando: npm start (ele vai rodar localmente)
 5. Hoje ele aponta todas as rotas para https://cludetesteapi.azurewebsites.net que é o backend que já publiquei. 
 
-!!! Caso queira fazer debug para rodar o Azure Service Bus ou entender o funcionamento do projeto, pode trocar "https://cludetesteapi.azurewebsites.net" por "https://localhost:7068"
+!!! Caso queira fazer debug para rodar o Azure Service Bus ou entender o funcionamento do projeto, pode trocar "https://cludetesteapi.azurewebsites.net" por "https://localhost:5000" que é a gerada pelo docker
 
 
 # Senha que é solicitada quando executa o projeto - TELA DE LOGIN
