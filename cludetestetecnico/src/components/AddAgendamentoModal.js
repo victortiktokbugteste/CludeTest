@@ -19,7 +19,8 @@ const AddAgendamentoModal = ({ isOpen, onClose, onSuccess, editId = null, pacien
     id: null,
     pacienteId: '',
     profissionalSaudeId: '',
-    scheduleDate: ''
+    scheduleDate: '',
+    profissionalEmailToReceiveNotification: ''
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -32,7 +33,13 @@ const AddAgendamentoModal = ({ isOpen, onClose, onSuccess, editId = null, pacien
         loadAgendamento(editId);
       } else {
         setIsEditMode(false);
-        setFormData({ id: null, pacienteId: '', profissionalSaudeId: '', scheduleDate: '' });
+        setFormData({ 
+          id: null, 
+          pacienteId: '', 
+          profissionalSaudeId: '', 
+          scheduleDate: '',
+          profissionalEmailToReceiveNotification: ''
+        });
       }
     }
     // eslint-disable-next-line
@@ -50,7 +57,8 @@ const AddAgendamentoModal = ({ isOpen, onClose, onSuccess, editId = null, pacien
         id: response.data.id,
         pacienteId: response.data.pacienteId ? response.data.pacienteId.toString() : '',
         profissionalSaudeId: response.data.profissionalSaudeId ? response.data.profissionalSaudeId.toString() : '',
-        scheduleDate: formatDateTimeLocal(response.data.scheduleDate)
+        scheduleDate: formatDateTimeLocal(response.data.scheduleDate),
+        profissionalEmailToReceiveNotification: ''
       });
     } catch (err) {
       setError('Erro ao carregar agendamento');
@@ -93,7 +101,8 @@ const AddAgendamentoModal = ({ isOpen, onClose, onSuccess, editId = null, pacien
         const dataToSend = {
           pacienteId: formData.pacienteId ? parseInt(formData.pacienteId) : null,
           profissionalSaudeId: formData.profissionalSaudeId ? parseInt(formData.profissionalSaudeId) : null,
-          scheduleDate: formData.scheduleDate || null
+          scheduleDate: formData.scheduleDate || null,
+          profissionalEmailToReceiveNotification: formData.profissionalEmailToReceiveNotification || null
         };
         const response = await axios.post(`${API_URL}/salvar-agendamento`, dataToSend, {
           headers: {
@@ -119,7 +128,13 @@ const AddAgendamentoModal = ({ isOpen, onClose, onSuccess, editId = null, pacien
   };
 
   const handleClose = () => {
-    setFormData({ id: null, pacienteId: '', profissionalSaudeId: '', scheduleDate: '' });
+    setFormData({ 
+      id: null, 
+      pacienteId: '', 
+      profissionalSaudeId: '', 
+      scheduleDate: '',
+      profissionalEmailToReceiveNotification: ''
+    });
     setError('');
     setIsEditMode(false);
     onClose();
@@ -169,6 +184,19 @@ const AddAgendamentoModal = ({ isOpen, onClose, onSuccess, editId = null, pacien
               ))}
             </select>
           </div>
+          {!isEditMode && (
+            <div className="form-group">
+              <label htmlFor="profissionalEmailToReceiveNotification">E-mail do Profissional</label>
+              <input
+                type="email"
+                id="profissionalEmailToReceiveNotification"
+                name="profissionalEmailToReceiveNotification"
+                value={formData.profissionalEmailToReceiveNotification}
+                onChange={handleChange}
+                placeholder="Digite o e-mail do profissional"
+              />
+            </div>
+          )}
           <div className="form-group">
             <label htmlFor="scheduleDate">Data e Hora do Agendamento</label>
             <input
