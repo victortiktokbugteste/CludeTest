@@ -5,7 +5,7 @@ https://cludetestfront.azurewebsites.net/
 Essa é toda a parte visual da nossa aplicação.
 Ela possui:
 
-1 TELA PRA FAZER O LOGIN (essa chama o endpoint /login que retorna o Bearer Token)
+1 TELA PRA FAZER O LOGIN (essa chama o endpoint /login que retorna o Bearer Token) /n
 1 TELA PRA CRIAR, EXCLUIR, ALTERAR PACIENTES
 1 TELA PRA CRIAR, EXCLUIR, ALTERAR PROFISSIONAIS DE SAÚDE (Nessa tela tem um Plus que é poder ver os agendamentos do profissional, fica no segundo icone antes do excluir)
 1 TELA PRA CRIAR, EXCLUIR, ALTERAR OS AGENDAMENTOS
