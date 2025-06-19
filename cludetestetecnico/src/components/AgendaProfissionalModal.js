@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './AddAgendamentoModal.css';
 
-const API_URL = 'https://localhost:7068';
+const API_URL = 'https://cludetesteapi.azurewebsites.net';
 
 const AgendaProfissionalModal = ({ isOpen, onClose, profissionalId }) => {
   const [agendamentos, setAgendamentos] = useState([]);

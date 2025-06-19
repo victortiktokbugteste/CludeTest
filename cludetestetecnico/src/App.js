@@ -6,7 +6,6 @@ import IndexPage from './pages/IndexPage';
 import PacientesPage from './pages/PacientesPage';
 import ProfissionaisPage from './pages/ProfissionaisPage';
 import AgendamentosPage from './pages/AgendamentosPage';
-import Layout from './components/Layout';
 
 const PrivateRoute = ({ children }) => {
   return isAuthenticated() ? children : <Navigate to="/" />;

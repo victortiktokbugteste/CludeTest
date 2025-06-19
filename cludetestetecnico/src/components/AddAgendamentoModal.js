@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AddAgendamentoModal.css';
 
-const API_URL = "https://localhost:7068";
+const API_URL = "https://cludetesteapi.azurewebsites.net";
 
 // Função utilitária para formatar data para o input datetime-local sem segundos
 function formatDateTimeLocal(dateString) {

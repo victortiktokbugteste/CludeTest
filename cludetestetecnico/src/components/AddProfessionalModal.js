@@ -19,7 +19,7 @@ const AddProfessionalModal = ({ isOpen, onClose, onSuccess, editingProfessionalI
 
   const loadProfessionalData = async (id) => {
     try {
-      const response = await fetch(`https://localhost:7068/get-profissional-saude/${id}`, {
+      const response = await fetch(`https://cludetesteapi.azurewebsites.net/get-profissional-saude/${id}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -56,8 +56,8 @@ const AddProfessionalModal = ({ isOpen, onClose, onSuccess, editingProfessionalI
 
     try {
       const url = editingProfessionalId 
-        ? 'https://localhost:7068/atualizar-profissional-saude'
-        : 'https://localhost:7068/salvar-profissional-saude';
+        ? 'https://cludetesteapi.azurewebsites.net/atualizar-profissional-saude'
+        : 'https://cludetesteapi.azurewebsites.net/salvar-profissional-saude';
 
       const response = await fetch(url, {
         method: editingProfessionalId ? 'PUT' : 'POST',

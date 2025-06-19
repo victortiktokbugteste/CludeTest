@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = "https://localhost:7068";
+const API_URL = "https://cludetesteapi.azurewebsites.net";
 
 export async function getAgendamentos() {
   const token = localStorage.getItem("token");

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = "https://localhost:7068/api/Auth";
+const API_URL = "https://cludetesteapi.azurewebsites.net/api/Auth";
 
 export async function login(username, password) {
   const response = await axios.post(`${API_URL}/login`, {

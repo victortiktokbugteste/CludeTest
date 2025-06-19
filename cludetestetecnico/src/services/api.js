@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://localhost:7068',
+  baseURL: 'https://cludetesteapi.azurewebsites.net',
   headers: {
     'Content-Type': 'application/json'
   }
