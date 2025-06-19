@@ -12,7 +12,7 @@ Mas claro que eu encaro o react se assim for necessário!
 2. Tenha o node LTS 22 instalado em sua máquina
 3. Execute o seguinte comando dentro do diretório do projeto: npm install
 4. Execute o comando: npm start (ele vai rodar localmente)
-5. Hoje ele aponta todas as rotas para https://cludetesteapi.azurewebsites.net que é o backend que já publiquei. 
+
 
 
 # Senha que é solicitada quando executa o projeto - TELA DE LOGIN
