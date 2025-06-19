@@ -3,7 +3,7 @@ import axios from 'axios';
 import AddAgendamentoModal from '../components/AddAgendamentoModal';
 import './Agendamentos.css';
 
-const API_URL = "https://cludetesteapi.azurewebsites.net";
+const API_URL = "http://localhost:5000";
 
 const Agendamentos = () => {
   const [agendamentos, setAgendamentos] = useState([]);

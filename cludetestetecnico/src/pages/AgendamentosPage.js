@@ -5,7 +5,7 @@ import { getAgendamentos, deleteAgendamento } from '../services/agendamentoServi
 import axios from 'axios';
 import './AgendamentosPage.css';
 
-const API_URL = "https://cludetesteapi.azurewebsites.net";
+const API_URL = "http://localhost:5000";
 
 const AgendamentosPage = () => {
   const [agendamentos, setAgendamentos] = useState([]);

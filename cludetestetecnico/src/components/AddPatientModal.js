@@ -19,7 +19,7 @@ const AddPatientModal = ({ isOpen, onClose, onSuccess, editingPatientId }) => {
 
   const loadPatientData = async (id) => {
     try {
-      const response = await fetch(`https://cludetesteapi.azurewebsites.net/get-paciente/${id}`, {
+      const response = await fetch(`http://localhost:5000/get-paciente/${id}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -56,8 +56,8 @@ const AddPatientModal = ({ isOpen, onClose, onSuccess, editingPatientId }) => {
 
     try {
       const url = editingPatientId 
-        ? 'https://cludetesteapi.azurewebsites.net/atualizar-paciente'
-        : 'https://cludetesteapi.azurewebsites.net/salvar-paciente';
+        ? 'http://localhost:5000/atualizar-paciente'
+        : 'http://localhost:5000/salvar-paciente';
 
       const response = await fetch(url, {
         method: editingPatientId ? 'PUT' : 'POST',
